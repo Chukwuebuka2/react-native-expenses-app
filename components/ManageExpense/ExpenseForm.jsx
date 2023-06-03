@@ -153,4 +153,4 @@ const styles = StyleSheet.create({
     minWidth: 120,
     marginHorizontal: 8,
   },
-});
+}); 
