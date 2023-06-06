@@ -1,19 +1,21 @@
 import axios from "axios";
 
-export const storeExpense = (expenseData) => {
-  axios.post(
-    "https://react-native-course-88789-default-rtdb.firebaseio.com/expenses.json",
+const BACKEND_URL = "https://react-native-course-88789-default-rtdb.firebaseio.com";
+
+export const storeExpense = async (expenseData) => {
+  const response = await axios.post(
+   BACKEND_URL +  "/expenses.json",
     expenseData
   );
+  const id = response.data.name;
+  return id;
 };
 
 export const fetchExpenses = async () => {
   const response = await axios.get(
-    "https://react-native-course-88789-default-rtdb.firebaseio.com/expenses.json"
+    BACKEND_URL + "/expenses.json"
   );
-
   const expenses = [];
-
   for (const key in response.data) {
     const expenseObj = {
       id: key,
@@ -23,6 +25,18 @@ export const fetchExpenses = async () => {
     };
     expenses.push(expenseObj);
   }
-
   return expenses;
+};
+
+export const updateExpense = (id, updatedExpenseData) => {
+  return axios.put(
+    BACKEND_URL + `/expenses/${id}.json`,
+    updatedExpenseData
+  );
+};
+
+export const deleteExpense = async (id) => {
+  return axios.delete(
+    BACKEND_URL + `/expenses/${id}.json`
+  );
 };
